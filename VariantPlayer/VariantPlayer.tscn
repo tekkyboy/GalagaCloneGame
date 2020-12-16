@@ -1,0 +1,69 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://VariantPlayer/VariantPlayer.gd" type="Script" id=1]
+[ext_resource path="res://Textures/player_sheet.png" type="Texture" id=2]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 99, 77 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 198, 0, 99, 77 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 99, 0, 99, 77 )
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "Left",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 2 ) ],
+"loop": true,
+"name": "Right",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ) ],
+"loop": true,
+"name": "Straight",
+"speed": 5.0
+} ]
+
+[node name="VariantPlayer" type="Area2D"]
+position = Vector2( 280.009, 221.583 )
+script = ExtResource( 1 )
+speed = 200
+fireDelay = 0.2
+invincibilityDuration = 0
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0.580933, 1.00116 )
+scale = Vector2( 0.75, 0.75 )
+frames = SubResource( 4 )
+animation = "Straight"
+
+[node name="FiringPositions" type="Node2D" parent="."]
+position = Vector2( 1.1362, 1.27277 )
+
+[node name="CenterGun" type="Node2D" parent="FiringPositions"]
+position = Vector2( -1.58916, -49.3628 )
+
+[node name="FireDelayTimer" type="Timer" parent="."]
+
+[node name="InvincibilityTimer" type="Timer" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+visible = false
+position = Vector2( -295.385, -182.302 )
+polygon = PoolVector2Array( 288.791, 154.091, 301.263, 154.536, 305.272, 171.909, 322.2, 183.49, 326.209, 181.709, 328.436, 178.59, 331.999, 178.59, 331.554, 200.417, 329.327, 203.09, 327.099, 199.081, 306.163, 203.09, 300.372, 211.554, 289.682, 211.999, 283.445, 203.981, 264.737, 199.972, 262.955, 202.645, 260.282, 199.527, 258.5, 178.59, 262.509, 178.59, 264.291, 182.154, 268.746, 183.936, 286.564, 173.69 )
+[connection signal="area_entered" from="." to="." method="_on_VariantPlayer_area_entered"]
+[connection signal="invincibility_end" from="." to="." method="_on_VariantPlayer_invincibility_end"]
+[connection signal="invincibility_start" from="." to="." method="_on_VariantPlayer_invincibility_start"]
+[connection signal="timeout" from="InvincibilityTimer" to="." method="_on_InvincibilityTimer_timeout"]
