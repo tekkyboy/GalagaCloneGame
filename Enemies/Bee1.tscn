@@ -1,0 +1,245 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Textures/Bee_Enemy.png" type="Texture" id=2]
+[ext_resource path="res://Stats.tscn" type="PackedScene" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Area2D
+
+onready var stats = $Stats
+onready var firingPositions := $FiringPositions
+onready var path_follow = get_parent()
+export var speed = 325
+var score = 0
+var move_direction = 0
+var anim_direction = \"N\"
+var preloadBullet := preload(\"res://EnemyBullet/EnemyBullet.tscn\")
+
+const explosion = preload(\"res://PlayerExplosion/ExplosionEffect.tscn\")
+
+func _ready():
+	set_process(true)
+	
+func damage(health):
+	stats.health -= health
+
+func _physics_process(delta):
+	MovementLoop(delta)
+
+func _process(delta):
+	AnimationLoop()
+			
+func MovementLoop(delta):
+	var prepos = path_follow.get_global_position()
+	path_follow.set_offset(path_follow.get_offset() + speed*delta)
+	var pos = path_follow.get_global_position()
+	move_direction = (pos.angle_to_point(prepos)/3.14)*180
+	
+func AnimationLoop():
+	if move_direction <= 15 and move_direction >= -15:
+		anim_direction = \"E\"
+	elif move_direction <= 60 and move_direction >= 15:
+		anim_direction = \"SE\"
+	elif move_direction <= 120 and move_direction >= 60:
+		anim_direction = \"S\"
+	elif move_direction <= 165 and move_direction >= 120:
+		anim_direction = \"SW\"
+	elif move_direction >= -60 and move_direction <= -15:
+		anim_direction = \"NE\"
+	elif move_direction >= -120 and move_direction <= -60:
+		anim_direction = \"N\"
+	elif move_direction >= -165 and move_direction <= -120:
+		anim_direction = \"NW\"	
+	elif move_direction <= -165 and move_direction >= 165:
+		anim_direction = \"W\"
+		
+	var animation = anim_direction
+	get_node(\"AnimationPlayer\").play(animation)
+	
+	
+func _on_Stats_no_health():
+	get_tree().get_root().get_node(\"CloneMain/HUDLayer/HUD/scoreLabel\").score += 100
+	queue_free()
+	
+"
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 6.0069
+height = 7.58801
+
+[sub_resource type="Animation" id=3]
+resource_name = "E"
+length = 1.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 4, 5 ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 1.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "NE"
+length = 1.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 10, 11 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "NW"
+length = 1.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 8, 9 ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 1.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 2, 3 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "SE"
+length = 1.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 14, 15 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "SW"
+length = 1.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 12, 13 ]
+}
+
+[sub_resource type="Animation" id=10]
+length = 1.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.7 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 6, 7 ]
+}
+
+[node name="Bee1" type="Area2D" groups=[
+"damageable",
+"enemies",
+]]
+position = Vector2( 271.26, 88.604 )
+rotation = -4.69758
+script = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0.279522, 1.38068 )
+rotation = -7.89212
+texture = ExtResource( 2 )
+vframes = 2
+hframes = 8
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2( 0.453552, -2.00653 )
+rotation = -2.20056
+scale = Vector2( 1.47565, -1.17499 )
+shape = SubResource( 2 )
+
+[node name="FiringPositions" type="Node2D" parent="."]
+position = Vector2( -6.05858, -3.91071 )
+
+[node name="CenterGun" type="Node2D" parent="FiringPositions"]
+position = Vector2( -28.4123, 10.5224 )
+rotation = -0.277912
+
+[node name="Stats" parent="." instance=ExtResource( 3 )]
+max_health = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/E = SubResource( 3 )
+anims/N = SubResource( 4 )
+anims/NE = SubResource( 5 )
+anims/NW = SubResource( 6 )
+anims/S = SubResource( 7 )
+anims/SE = SubResource( 8 )
+anims/SW = SubResource( 9 )
+anims/W = SubResource( 10 )
+[connection signal="no_health" from="Stats" to="." method="_on_Stats_no_health"]

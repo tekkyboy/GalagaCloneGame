@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Enemies/BossGalaga.tscn" type="PackedScene" id=1]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 474.925, -26.0225, 0, 0, 0, 0, 84.8651, 246.306, 0, 0, 0, 0, 505.844, 404.47, 0, 0, 0, 0, 88.4327, 680.366, 0, 0, 0, 0, 580.177, 817.72 )
+}
+
+[node name="BossGalaga1" type="Node2D"]
+
+[node name="BossGalaga1Path" type="Path2D" parent="."]
+curve = SubResource( 1 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="BossGalaga1Path"]
+position = Vector2( 474.925, -26.0225 )
+rotation = 2.53211
+
+[node name="BossGalaga" parent="BossGalaga1Path/PathFollow2D" instance=ExtResource( 1 )]
+position = Vector2( 6.61034, 2.67975 )

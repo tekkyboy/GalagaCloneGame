@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Enemies/Bee1.tscn" type="PackedScene" id=1]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -52.5944, 473.267, 0, 0, 0, 0, 132.668, 640.144, 0, 0, 0, 0, 371.67, 650.044, 0, 0, 0, 0, 504.606, 439.326, 0, 0, 0, 0, 436.78, 297.315, 0, 0, 0, 0, 393.92, 273.504 )
+}
+
+[node name="Bee7" type="Node2D"]
+
+[node name="Bee7Path" type="Path2D" parent="."]
+position = Vector2( 4.76221, 4.76221 )
+curve = SubResource( 1 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Bee7Path"]
+position = Vector2( -52.5944, 473.267 )
+rotation = 4.71239
+rotate = false
+loop = false
+
+[node name="Bee1" parent="Bee7Path/PathFollow2D" instance=ExtResource( 1 )]
+position = Vector2( -1.68321, 5.16541 )

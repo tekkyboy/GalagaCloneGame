@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Enemies/Butterfly.tscn" type="PackedScene" id=1]
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 73.4482, -63.1405, 0, 0, 0, 0, 114.816, 298.568, 0, 0, 0, 0, 123.448, 858.859, 0, 0, 0, 0, 273.448, 902.454, 0, 0, 0, 0, 363.448, 886.454, 0, 0, 0, 0, 431.448, 822.454, 0, 0, 0, 0, 256.385, 491.714, 0, 0, 0, 0, 254.385, 191.714 )
+}
+
+[node name="Butterfly1" type="Node2D"]
+position = Vector2( 23.9639, 11.7037 )
+
+[node name="Butterfly1Path" type="Path2D" parent="."]
+position = Vector2( -2, -2 )
+curve = SubResource( 1 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Butterfly1Path"]
+position = Vector2( 73.4482, -63.1405 )
+rotation = 1.45692
+loop = false
+lookahead = 93.476
+
+[node name="Butterfly" parent="Butterfly1Path/PathFollow2D" instance=ExtResource( 1 )]
+position = Vector2( -12.0477, -2.69781 )
