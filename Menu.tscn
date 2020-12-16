@@ -1,0 +1,99 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Textures/variantButton.png" type="Texture" id=1]
+[ext_resource path="res://Sounds/Electronic Fantasy.ogg" type="AudioStream" id=2]
+[ext_resource path="res://Textures/BG.png" type="Texture" id=4]
+[ext_resource path="res://Textures/prstartk.ttf" type="DynamicFontData" id=5]
+[ext_resource path="res://Textures/variantButtonPressed.png" type="Texture" id=6]
+[ext_resource path="res://Textures/exitButton.png" type="Texture" id=7]
+[ext_resource path="res://Textures/classicButton.png" type="Texture" id=8]
+[ext_resource path="res://Textures/classicButtonPressed.png" type="Texture" id=9]
+[ext_resource path="res://ClassicButton.gd" type="Script" id=10]
+[ext_resource path="res://Textures/exitButtonPressed.png" type="Texture" id=11]
+[ext_resource path="res://VariantButton.gd" type="Script" id=12]
+[ext_resource path="res://ExitButton.gd" type="Script" id=13]
+
+[sub_resource type="DynamicFont" id=1]
+size = 35
+font_data = ExtResource( 5 )
+
+[node name="Menu" type="Node"]
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( 300.459, 385.236 )
+scale = Vector2( 0.564837, 0.418776 )
+texture = ExtResource( 4 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -10.0
+autoplay = true
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -107.378
+margin_top = 177.192
+margin_right = 102.622
+margin_bottom = 213.192
+custom_fonts/font = SubResource( 1 )
+text = "GALAGA"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ClassicButton" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.6567
+margin_top = 16.0224
+margin_right = 175.343
+margin_bottom = 81.0224
+rect_scale = Vector2( 0.613728, 0.684366 )
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 9 )
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VariantButton" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -81.7791
+margin_top = 80.367
+margin_right = 174.221
+margin_bottom = 145.367
+rect_scale = Vector2( 0.613728, 0.684366 )
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 6 )
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitButton" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -81.7791
+margin_top = 145.107
+margin_right = 174.221
+margin_bottom = 210.107
+rect_scale = Vector2( 0.613728, 0.684366 )
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 11 )
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="ClassicButton" to="ClassicButton" method="_on_ClassicButton_pressed"]
+[connection signal="pressed" from="VariantButton" to="VariantButton" method="_on_VariantButton_pressed"]
+[connection signal="pressed" from="ExitButton" to="ExitButton" method="_on_ExitButton_pressed"]
