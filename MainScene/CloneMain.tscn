@@ -1,0 +1,168 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://MainScene/CloneMain.gd" type="Script" id=1]
+[ext_resource path="res://Textures/prstartk.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Sounds/player_shoot.wav" type="AudioStream" id=3]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Textures/starSmall.png" type="Texture" id=5]
+[ext_resource path="res://Textures/backgroundColor.png" type="Texture" id=6]
+[ext_resource path="res://Textures/life.png" type="Texture" id=7]
+[ext_resource path="res://MainScene/LifeUI.gd" type="Script" id=8]
+[ext_resource path="res://MainScene/scoreLabel.gd" type="Script" id=9]
+[ext_resource path="res://MainScene/SoundController.gd" type="Script" id=10]
+[ext_resource path="res://Sounds/FirstStage.wav" type="AudioStream" id=11]
+[ext_resource path="res://Sounds/opening.wav" type="AudioStream" id=12]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 2 )
+
+[node name="CloneMain" type="Node"]
+script = ExtResource( 1 )
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( -9.63868, -2.77744 )
+scale = Vector2( 4.13211, 5.06356 )
+texture = ExtResource( 6 )
+centered = false
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Background"]
+position = Vector2( 74.6579, -0.352887 )
+amount = 50
+lifetime = 3.0
+texture = ExtResource( 5 )
+emission_shape = 2
+emission_rect_extents = Vector2( 80, 1 )
+direction = Vector2( 0, 1 )
+spread = 0.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 60.0
+initial_velocity_random = 0.6
+scale_amount = 0.1
+scale_amount_random = 0.25
+
+[node name="HUDLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="HUDLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeIcon" type="TextureRect" parent="HUDLayer/HUD"]
+margin_left = 2.0
+margin_top = 717.0
+margin_right = 107.0
+margin_bottom = 744.0
+texture = ExtResource( 7 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scoreLabel" type="VBoxContainer" parent="HUDLayer/HUD"]
+margin_left = 261.687
+margin_top = 19.0703
+margin_right = 357.687
+margin_bottom = 59.0703
+alignment = 1
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="score" type="Label" parent="HUDLayer/HUD/scoreLabel"]
+margin_top = 2.0
+margin_right = 96.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 1 )
+text = "SCORE"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="numberScore" type="Label" parent="HUDLayer/HUD/scoreLabel"]
+margin_top = 22.0
+margin_right = 96.0
+margin_bottom = 38.0
+custom_fonts/font = SubResource( 1 )
+text = "00"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="stageMessage" type="Label" parent="HUDLayer/HUD"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 212.103
+margin_top = 298.464
+margin_right = 324.103
+margin_bottom = 314.464
+rect_scale = Vector2( 0.953027, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="stageMessageTimer" type="Timer" parent="HUDLayer/HUD"]
+wait_time = 3.0
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
+position = Vector2( 298.42, 671.552 )
+
+[node name="SoundController" type="Node" parent="."]
+script = ExtResource( 10 )
+
+[node name="PlayerShoot" type="AudioStreamPlayer" parent="SoundController"]
+stream = ExtResource( 3 )
+
+[node name="FirstStage" type="AudioStreamPlayer" parent="SoundController"]
+stream = ExtResource( 12 )
+
+[node name="Stage" type="AudioStreamPlayer" parent="SoundController"]
+stream = ExtResource( 11 )
+
+[node name="FirstStageSpawn" type="Timer" parent="."]
+wait_time = 6.0
+
+[node name="SpawnBee2Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="SpawnBee3Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="Spawnbee45Timer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="SpawnBee6Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="SpawnBee78Timer" type="Timer" parent="."]
+wait_time = 3.0
+
+[node name="SpawnButterfly1Timer" type="Timer" parent="."]
+
+[node name="checkEnemiesTimer" type="Timer" parent="."]
+[connection signal="timeout" from="HUDLayer/HUD/stageMessageTimer" to="HUDLayer/HUD" method="_on_stageMessageTimer_timeout"]
+[connection signal="timeout" from="FirstStageSpawn" to="." method="_on_FirstStageSpawn_timeout"]
+[connection signal="timeout" from="SpawnBee2Timer" to="." method="_on_spawnTimer_timeout"]
+[connection signal="timeout" from="SpawnBee3Timer" to="." method="_on_SpawnBee3Timer3_timeout"]
+[connection signal="timeout" from="Spawnbee45Timer" to="." method="_on_Spawnbee45Timer_timeout"]
+[connection signal="timeout" from="SpawnBee6Timer" to="." method="_on_SpawnBee6Timer_timeout"]
+[connection signal="timeout" from="SpawnBee78Timer" to="." method="_on_SpawnBee78Timer_timeout"]
+[connection signal="timeout" from="SpawnButterfly1Timer" to="." method="_on_SpawnButterfly1Timer_timeout"]
+[connection signal="timeout" from="checkEnemiesTimer" to="." method="_on_checkEnemiesTimer_timeout"]

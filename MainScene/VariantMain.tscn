@@ -1,0 +1,147 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Textures/backgroundColor.png" type="Texture" id=1]
+[ext_resource path="res://Textures/starSmall.png" type="Texture" id=2]
+[ext_resource path="res://Sounds/player_shoot.wav" type="AudioStream" id=3]
+[ext_resource path="res://MainScene/spawner_enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Textures/life.png" type="Texture" id=5]
+[ext_resource path="res://Meteor/Meteor.tscn" type="PackedScene" id=6]
+[ext_resource path="res://MainScene/scoreLabel.gd" type="Script" id=7]
+[ext_resource path="res://Textures/prstartk.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://MainScene/SoundController.gd" type="Script" id=9]
+[ext_resource path="res://Sounds/FirstStage.wav" type="AudioStream" id=10]
+[ext_resource path="res://Player/Player.tscn" type="PackedScene" id=11]
+[ext_resource path="res://MainScene/VariantMain.gd" type="Script" id=12]
+[ext_resource path="res://MainScene/LifeUI.gd" type="Script" id=13]
+[ext_resource path="res://Sounds/Alone Against Enemy.ogg" type="AudioStream" id=14]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 8 )
+
+[node name="VariantMain" type="Node2D"]
+script = ExtResource( 12 )
+
+[node name="Background" type="Sprite" parent="."]
+position = Vector2( -9.63868, -2.77744 )
+scale = Vector2( 4.13211, 5.06356 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Background"]
+position = Vector2( 74.6579, -0.352887 )
+amount = 50
+lifetime = 3.0
+texture = ExtResource( 2 )
+emission_shape = 2
+emission_rect_extents = Vector2( 80, 1 )
+direction = Vector2( 0, 1 )
+spread = 0.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 60.0
+initial_velocity_random = 0.6
+scale_amount = 0.1
+scale_amount_random = 0.25
+
+[node name="SoundController" type="Node" parent="."]
+script = ExtResource( 9 )
+
+[node name="PlayerShoot" type="AudioStreamPlayer" parent="SoundController"]
+stream = ExtResource( 3 )
+
+[node name="FirstStage" type="AudioStreamPlayer2D" parent="SoundController"]
+stream = ExtResource( 10 )
+
+[node name="VariantSong" type="AudioStreamPlayer" parent="SoundController"]
+stream = ExtResource( 14 )
+volume_db = -10.0
+
+[node name="HUDLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="HUDLayer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 13 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LifeIcon" type="TextureRect" parent="HUDLayer/HUD"]
+margin_left = 2.0
+margin_top = 717.0
+margin_right = 107.0
+margin_bottom = 744.0
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="scoreLabel" type="VBoxContainer" parent="HUDLayer/HUD"]
+margin_left = 261.687
+margin_top = 19.0703
+margin_right = 357.687
+margin_bottom = 59.0703
+alignment = 1
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="score" type="Label" parent="HUDLayer/HUD/scoreLabel"]
+margin_top = 2.0
+margin_right = 96.0
+margin_bottom = 18.0
+custom_fonts/font = SubResource( 1 )
+text = "SCORE"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="numberScore" type="Label" parent="HUDLayer/HUD/scoreLabel"]
+margin_top = 22.0
+margin_right = 96.0
+margin_bottom = 38.0
+custom_fonts/font = SubResource( 1 )
+text = "00"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="stageMessage" type="Label" parent="HUDLayer/HUD"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 212.103
+margin_top = 298.464
+margin_right = 324.103
+margin_bottom = 314.464
+rect_scale = Vector2( 0.953027, 1 )
+custom_fonts/font = SubResource( 2 )
+align = 1
+valign = 1
+uppercase = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="stageMessageTimer" type="Timer" parent="HUDLayer/HUD"]
+wait_time = 3.0
+
+[node name="Meteor" parent="HUDLayer" instance=ExtResource( 6 )]
+position = Vector2( 310.35, 131.482 )
+scale = Vector2( 1.44629, 1.2825 )
+
+[node name="spawner_enemy" parent="." instance=ExtResource( 4 )]
+
+[node name="Player" parent="." instance=ExtResource( 11 )]
+position = Vector2( 303.267, 698.342 )
+[connection signal="timeout" from="HUDLayer/HUD/stageMessageTimer" to="HUDLayer/HUD" method="_on_stageMessageTimer_timeout"]
