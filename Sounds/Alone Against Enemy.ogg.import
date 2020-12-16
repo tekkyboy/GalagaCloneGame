@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Alone Against Enemy.ogg-cd10c3399e60d3daa5e30604cd30c051.oggstr"
+
+[deps]
+
+source_file="res://Sounds/Alone Against Enemy.ogg"
+dest_files=[ "res://.import/Alone Against Enemy.ogg-cd10c3399e60d3daa5e30604cd30c051.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
